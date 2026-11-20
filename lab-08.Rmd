@@ -74,7 +74,7 @@ weather_noNA <- weather %>% filter(!is.na(RainTomorrow))
 ```{r}
 weather_noNA %>% filter(!is.na(RainToday)) %>% group_by(Location) %>% count(RainToday == "Yes") %>% arrange(desc(n))
 ```
-Alice Springs, Woomera and Canberra have the most rainy days.
+Portland, Cairns and Walpole have the most rainy days.
 
 # Exercise 2: Logistic regression
 
@@ -90,7 +90,8 @@ weather_Portland <- weather_noNA %>%
 1. Try to predict `RainTomorrow` by fitting a linear regression using the variable `RainToday` and print the output using `tidy()`.
 
 ```{r}
-
+Rain_fit <- logistic_reg() %>% set_engine("glm") %>% fit(RainTomorrow ~ RainToday, data = weather_Portland, family = "binomial")
+tidy(Rain_fit)
 ```
 
 2. For each point in our dataset, what are the fitted probabilities that tomorrow it's going to rain? 
