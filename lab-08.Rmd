@@ -1,6 +1,6 @@
 ---
 title: "Lab 08 - Predicting rain"
-author: "INSERT NAME HERE"
+author: "Ethan Carter"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -20,7 +20,8 @@ glimpse(email)
 
 1. What proportion of emails are spam? Calculate the proportion of spam separately for emails with and without the word “winner”.
 
-2. Fit a logistic regression of `spam` on `winner` and write down the fitted model. Use `predict(..., type = "prob")` to find the predicted probability of spam for each group. Compare them with your previously calculated proportions.  
+2. Fit a logistic regression of `spam` on `winner` and write down the fitted model. Use `predict(..., type = "prob")` to find the predicted probability of spam for each group. Compare them with your previously calculated proportions. 
+spam = -2.314 + 1.526*winneryes
 
 3. How about fitting a logistic regression of `spam` on `winner` and `num_char`? Calculate the confusion matrix of the fitted logistic model on this new model, and compare with the confusion matrix result of the previous model, relying on `winner` only. Explain the differences on confusion matrix.
 
@@ -65,14 +66,15 @@ weather %>%
 1. Are there any missing values in our variable of interest `RainTomorrow`? If so, we filter them out and save the new dataset as `weather_noNA`. 
 
 ```{r}
-
+weather_noNA <- weather %>% filter(!is.na(RainTomorrow))
 ```
 
 2. Which cities are the ones with more rain days? To do this, let's analyze the `RainToday` variable. 
 
 ```{r}
-
+weather_noNA %>% filter(!is.na(RainToday)) %>% group_by(Location) %>% count(RainToday == "Yes") %>% arrange(desc(n))
 ```
+Alice Springs, Woomera and Canberra have the most rainy days.
 
 # Exercise 2: Logistic regression
 
